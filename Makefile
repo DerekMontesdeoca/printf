@@ -1,24 +1,33 @@
 CC := cc
+
+LIBFT := libft
+LIBFT_DIR := libft
+
 NAME := libftprintf.a
+SRCS := ft_printf.c
+OBJS := $(SRCS:.c=.o)
+HEADERS := ft_printf.h $(LIBFT_DIR)/libft.h
+LIBRARY_INCLUDES := ./libft
 CFLAGS := -Wall -Wextra -Werror
 ifeq ($(DEBUG), TRUE)
 	CFLAGS += -g3
 endif
-SRCS := ft_printf.c
-OBJS := $(SRCS:.c=.o)
-HEADERS := ft_printf.h
+CPPFLAGS := $(addprefix -I, $(LIBRARY_INCLUDES))
 
 ################################################################################
 # Rules                                                                        #
 ################################################################################
 
-all: $(NAME)
+all: $(NAME) $(LIBFT)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	@ar -rcsv $@ $?
 
-%.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
+%.o: %.c $(HEADERS)
+	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
 	rm -f $(OBJS)
