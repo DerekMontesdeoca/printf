@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:27 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/03 14:00:23 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:31:04 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <stdbool.h>
 #include "libft.h"
 
-#define BUF_SIZE 1024
 #define FLAG_MINUS 1
 #define FLAG_PLUS 2
 #define FLAG_ZERO 4
@@ -51,20 +50,33 @@ static int	prune_flags(int flags, bool has_precision)
 	return (flags);
 }
 
-static int	parse_width(const char *format, int *i)
+/*
+ * Returns:
+ * 	+n if width set on format
+ * 	 0 if not set or set to 0 on format
+ * 	-1 if error
+ */
+static int	parse_width(const char *format, int *i, int *flags_out)
 {
 	int	width;
 
+	if (format[i] == '*')
+	{
+
+	} 
+	else if (format[i] == '')
 	width = ft_atoi(format + *i);
 	while (ft_isdigit(format[*i]))
-		++*i;
+		++(*i);
 	return (width);
 }
 
 /*
  * Returns:
- * 	-1 if not set 
- * 	-2 if error
+ * 	 n if width set on format
+ * 	-1 if * flag
+ * 	-2 if not set 
+ * 	-3 if error
  */
 static int	parse_precision(const char *format, int *i)
 {
@@ -96,12 +108,21 @@ static char	parse_conversion_specifier(const char *format, int *i)
 	return (specifier);
 }
 
-int	parse_conversion_token(const char *format, va_list ap, int *i, char *buffer)
+typedef struct	s_token_meta
 {
-	parse_flags(format, i);
-	parse_width(format, i);
-	parse_precision(format, i);
-	parse_conversion_specifier(format, i);
+	int flags;
+	int width;
+	int precision;
+	int specifier;
+}	t_token_meta;
+
+int	expand_token(const char *format, va_list *ap, int *i, char *buffer)
+{
+	t_token_meta	token_meta;
+	token_meta.flags = parse_flags(format, i);
+	token_meta.width = parse_width(format, i);
+	token_meta.precision = parse_precision(format, i);
+	parse_conversion_specifier(format, i, ap, token_meta);
 	write_buf();
 }
 
@@ -125,7 +146,7 @@ int	execute_format(const char *format, va_list ap)
 		}
 		if (format[i] == '%')
 		{
-			n_written = parse_conversion_token(format, ap, &i, buffer);
+			n_written = expand_token(format, ap, &i, buffer);
 			if (n_written < 0)
 				return (n_written);
 			counter += n_written;
@@ -144,5 +165,4 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (return_value);
 }
-
 
