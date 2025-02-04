@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:27 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/04 17:31:04 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:59:32 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,23 @@ static int	prune_flags(int flags, bool has_precision)
  * Returns:
  * 	+n if width set on format
  * 	 0 if not set or set to 0 on format
- * 	-1 if error
+ * 	-1 if * flag
+ * 	-2 if error FIXME
  */
 static int	parse_width(const char *format, int *i, int *flags_out)
 {
 	int	width;
 
-	if (format[i] == '*')
+	width = 0;
+	if (format[*i] == '*')
+		width = -1;
+	else if (ft_isdigit(format[*i]))
 	{
-
-	} 
-	else if (format[i] == '')
-	width = ft_atoi(format + *i);
-	while (ft_isdigit(format[*i]))
-		++(*i);
+		// FIXME: Should I parse ft_atoi like atoi? Probably not.
+		width = ft_atoi(format + *i);
+		while (ft_isdigit(format[*i]))
+			++(*i); // FIXME: Needs to create num
+	}
 	return (width);
 }
 
@@ -76,7 +79,7 @@ static int	parse_width(const char *format, int *i, int *flags_out)
  * 	 n if width set on format
  * 	-1 if * flag
  * 	-2 if not set 
- * 	-3 if error
+ * 	-3 if error FIXME
  */
 static int	parse_precision(const char *format, int *i)
 {
@@ -85,9 +88,8 @@ static int	parse_precision(const char *format, int *i)
 	precision = -1;
 	if (format[*i] == '.')
 	{
-		precision = ft_atoi(format + *i);
-		if (precision < 0)
-			precision = -2;
+		// FIXME: Negative values invalid in format string.
+		precision = ft_atoi(format + *i); // FIXME: Don't use atoi
 	}
 	return (precision);
 }
