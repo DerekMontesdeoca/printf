@@ -1,45 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writer.c                                           :+:      :+:    :+:   */
+/*   output_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:59:34 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/04 17:04:58 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:07:48 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "writer.h"
+#include "output_buffer.h"
 
 /*
  * Does not zero initialize the buffer but the variables.
  */
-void	writer_make(t_writer *w)
+void	output_buffer_reset(t_output_buffer *w)
 {
 	w->index = 0;
 	w->error = 0;
+	w->n_written = 0;
 }
 
-bool	writer_write(t_writer *w, const char *mem, size_t size)
+bool	output_buffer_write(t_output_buffer *w, const char *mem, size_t size)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < size && writer_putchar(w, mem[i]))
+	while (i < size && output_buffer_putchar(w, mem[i]))
 		++i;
 	return (w->error < 0);
 }
 
-bool	writer_write_str(t_writer *w, const char *str)
+bool	output_buffer_write_str(t_output_buffer *w, const char *str)
 {
-	while (*str != '\0' && writer_putchar(w, *str))
+	while (*str != '\0' && output_buffer_putchar(w, *str))
 		++str;
 	return (w->error < 0);
 }
 
-int	writer_flush(t_writer *w)
+int	output_buffer_flush(t_output_buffer *w)
 {
 	size_t	n_written;
 	size_t	total_written;
@@ -54,17 +55,18 @@ int	writer_flush(t_writer *w)
 		total_written += n_written;
 	}
 	w->index = 0;
+	w->n_written += total_written;
 	return (total_written);
 }
 
-bool	writer_is_full(t_writer *w)
+bool	output_buffer_is_full(t_output_buffer *w)
 {
 	return (w->index == BUF_SIZE);
 }
 
-bool	writer_putchar(t_writer *w, char c)
+bool	output_buffer_putchar(t_output_buffer *w, char c)
 {
-	if (writer_is_full(w) && writer_flush(w) < 0)
+	if (output_buffer_is_full(w) && output_buffer_flush(w) < 0)
 		return (false);
 	w->buf[w->index] = c;
 	w->index++;
