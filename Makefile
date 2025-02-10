@@ -1,26 +1,33 @@
+################################################################################
+# LIBFTPRINTF.A                                                                #
+################################################################################
+
 CC := cc
 
-LIBFT := libft
 LIBFT_DIR := libft
+LIBFT := $(LIBFT_DIR)/libft.a
 
 NAME := libftprintf.a
-SRCS := ft_printf.c
+SRCS := string_length.c writer.c ft_printf.c parser.c parser_token.c \
+		parser_padding.c parser_write_string.c writer_write_format.c \
+		parser_parse_format_string.c parser_write_nbr.c parser_hash_flag.c
 OBJS := $(SRCS:.c=.o)
-HEADERS := ft_printf.h $(LIBFT_DIR)/libft.h
-LIBRARY_INCLUDES := ./libft
-CFLAGS := -Wall -Wextra -Werror
+HEADERS := ft_printf.h parser.h $(LIBFT_DIR)/libft.h writer.h parser_private.h \
+		   string_length.h
+LIBRARY_INCLUDES := $(LIBFT_DIR)
+override CFLAGS += -Wall -Wextra -Werror
 ifeq ($(DEBUG), TRUE)
-	CFLAGS += -g3
+	override CFLAGS += -g3 -fno-omit-frame-pointer
 endif
-CPPFLAGS := $(addprefix -I, $(LIBRARY_INCLUDES))
+override CPPFLAGS += $(addprefix -I, $(LIBRARY_INCLUDES))
 
 ################################################################################
 # Rules                                                                        #
 ################################################################################
 
-all: $(NAME) $(LIBFT)
+all: $(LIBFT) $(NAME)
 
-$(NAME): $(OBJS) 
+$(NAME): $(OBJS)
 	@ar -rcsv $@ $?
 
 %.o: %.c $(HEADERS)
@@ -31,9 +38,11 @@ $(LIBFT):
 
 clean:
 	rm -f $(OBJS)
+	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

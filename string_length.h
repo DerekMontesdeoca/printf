@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   string_length.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 19:07:27 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/09 17:08:58 by dmontesd         ###   ########.fr       */
+/*   Created: 2025/02/09 13:17:30 by dmontesd          #+#    #+#             */
+/*   Updated: 2025/02/09 13:25:07 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "writer.h"
+#include <stddef.h>
 
-int	ft_printf(const char *format, ...)
-{
-	static t_writer			buf_out;
-	va_list					ap;
-	int						return_value;
-	t_parser				parser;
+size_t	hex_len(size_t n);
 
-	va_start(ap, format);
-	return_value = parser_parse_and_write(&parser, format, &ap, &buf_out);
-	va_end(ap);
-	return (return_value);
-}
+size_t	strnlen(const char *str, size_t n);
+
+size_t	uint_len(unsigned int n);

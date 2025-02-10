@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   parser_hash_flag.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 19:07:27 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/09 17:08:58 by dmontesd         ###   ########.fr       */
+/*   Created: 2025/02/10 11:57:27 by dmontesd          #+#    #+#             */
+/*   Updated: 2025/02/10 12:00:06 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "writer.h"
+#include "parser_private.h"
 
-int	ft_printf(const char *format, ...)
+void	alt_hex(t_parser *p, size_t len, bool upper)
 {
-	static t_writer			buf_out;
-	va_list					ap;
-	int						return_value;
-	t_parser				parser;
-
-	va_start(ap, format);
-	return_value = parser_parse_and_write(&parser, format, &ap, &buf_out);
-	va_end(ap);
-	return (return_value);
+	if (p->token_meta.flags & FLAG_HASH && len > 0)
+	{
+		writer_putchar(p->writer, '0');
+		if (upper)
+			writer_putchar(p->writer, 'X');
+		else
+			writer_putchar(p->writer, 'x');
+	}
 }
