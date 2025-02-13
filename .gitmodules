@@ -1,6 +1,6 @@
 [submodule "libft"]
 	path = libft
 	url = https://github.com/DerekMontesdeoca/libft
-[submodule "tests/cmocka"]
-	path = tests/cmocka
-	url = https://github.com/clibs/cmocka
+[submodule "tests"]
+	path = tests
+	url = git@github.com:DerekMontesdeoca/printf-tester.git
