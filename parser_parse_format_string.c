@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:30:41 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/09 17:14:52 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:53:45 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ bool	parser_parse_conversion_specifier(t_parser *p)
 	char				specifier;
 
 	specifier = -1;
-	found = ft_strchr(specifier_list, p->format[p->index]);
+	found = NULL;
+	if (p->format[p->index] != '\0')
+		found = ft_strchr(specifier_list, p->format[p->index]);
 	if (found != NULL)
 	{
 		specifier = *found;
@@ -88,7 +90,9 @@ void	parser_parse_flags(t_parser *p)
 	char				*found;
 
 	flags = 0;
-	found = ft_strchr(flag_list, p->format[p->index]);
+	found = NULL;
+	if (p->format[p->index] != '\0')
+		found = ft_strchr(flag_list, p->format[p->index]);
 	while (found != NULL)
 	{
 		flags |= 1 << (found - flag_list);
