@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:30:27 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/10 12:00:34 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:27:59 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parser_write_hex(t_parser *p, bool upper)
 	size_t			field_len;
 
 	p->token_meta.flags &= (FLAG_ZERO | FLAG_MINUS | FLAG_HASH);
-	n = va_arg(*p->ap, int);
+	n = va_arg(*p->ap, unsigned int);
 	len = hex_len(n);
 	if (p->token_meta.precision == 0 && n == 0)
 		len = 0;
