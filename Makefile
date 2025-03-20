@@ -27,6 +27,8 @@ override CPPFLAGS += $(addprefix -I, $(LIBRARY_INCLUDES))
 
 all: $(LIBFT) $(NAME)
 
+bonus: all
+
 $(NAME): $(OBJS)
 	@ar -rcsv $@ $?
 

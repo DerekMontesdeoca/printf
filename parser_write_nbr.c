@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:30:27 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/17 15:27:59 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:50:08 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parser_write_hex(t_parser *p, bool upper)
 		len = 0;
 	field_len = len;
 	if (p->token_meta.precision >= 0 && (size_t)p->token_meta.precision > len)
-		field_len += p->token_meta.precision;
+		field_len = p->token_meta.precision;
 	if (len > 0 && p->token_meta.flags & FLAG_HASH)
 		field_len += 2;
 	width_padding(p, field_len, PAD_LEFT);
