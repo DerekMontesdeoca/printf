@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:25:08 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/10 12:00:18 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:42:28 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void	parser_write_string(t_parser *p);
 
 void	parser_write_char(t_parser *p);
 
-void	alt_hex(t_parser *p, size_t len, bool upper);
+void	alt_hex(t_parser *p, size_t len, bool upper, unsigned int value);
 
 #endif
