@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   writer.h                                           :+:      :+:    :+:   */
+/*   writer_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:14:04 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/02/09 17:11:17 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:35:50 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WRITER_H
-# define WRITER_H
+#ifndef WRITER_BONUS_H
+# define WRITER_BONUS_H
 
 # include <stddef.h>
 # include <stdbool.h>
