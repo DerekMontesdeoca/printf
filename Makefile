@@ -23,7 +23,7 @@ BONUS_SRCS := string_length_bonus.c writer_bonus.c ft_printf_bonus.c \
 			  parser_hash_flag_bonus.c
 BONUS_OBJS := $(BONUS_SRCS:.c=.o)
 BONUS_HEADERS := ft_printf_bonus.h parser_bonus.h $(LIBFT_DIR)/libft.h \
-				 writer_bonus.h parser_private.h string_length.h
+				 writer_bonus.h parser_private_bonus.h string_length_bonus.h
 
 LIBRARY_INCLUDES := $(LIBFT_DIR)
 override CFLAGS += -Wall -Wextra -Werror

@@ -6,7 +6,7 @@
 /*   By: dmontesd <dmontesd@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 16:25:08 by dmontesd          #+#    #+#             */
-/*   Updated: 2025/03/25 21:35:39 by dmontesd         ###   ########.fr       */
+/*   Updated: 2025/03/25 21:52:51 by dmontesd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define FLAG_MINUS 1
 # define FLAG_PLUS 2
 # define FLAG_ZERO 4
-# define FLAG_BONUS_HASH 8
+# define FLAG_HASH 8
 # define FLAG_SPACE 16
 # define PARAM_ASTERISK -2
 # define FLAG_NOT_SET -1
