@@ -1,7 +1,8 @@
 #! /usr/bin/sh
 
-SCRIPT_DIR=$(dirname $0)
+SCRIPT_DIR="$(dirname $0)"
+DEST_DIR="$1"
 
-mkdir -p $1
-rsync -azv *.h *.c Makefile $1 
-"$SCRIPT_DIR/libft/export_to_42.sh" $1/libft
+mkdir -p "$DEST_DIR"
+rsync -azv *.h *.c Makefile "$DEST_DIR" 
+"$SCRIPT_DIR/libft/export_to_42.sh" "$DEST_DIR/libft"
