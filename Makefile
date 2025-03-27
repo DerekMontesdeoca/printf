@@ -8,7 +8,6 @@ LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
 
 NAME := libftprintf.a
-BONUS_NAME := libftprintf_bonus.a
 SRCS := string_length.c writer.c ft_printf.c parser.c parser_token.c \
 		parser_padding.c parser_write_string.c writer_write_format.c \
 		parser_parse_format_string.c parser_write_nbr.c parser_hash_flag.c
@@ -26,7 +25,7 @@ BONUS_HEADERS := ft_printf_bonus.h parser_bonus.h $(LIBFT_DIR)/libft.h \
 				 writer_bonus.h parser_private_bonus.h string_length_bonus.h
 
 LIBRARY_INCLUDES := $(LIBFT_DIR)
-override CFLAGS += -Wall -Wextra -Werror
+override CFLAGS += -Wall -Wextra -Werror -fPIE
 ifeq ($(DEBUG), TRUE)
 	override CFLAGS += -g3 -fno-omit-frame-pointer
 endif
@@ -36,15 +35,17 @@ override CPPFLAGS += $(addprefix -I, $(LIBRARY_INCLUDES))
 # Rules                                                                        #
 ################################################################################
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
-bonus: $(LIBFT) $(BONUS_NAME)
+bonus: $(LIBFT) $(BONUS_OBJS)
+	cp $(LIBFT) $(NAME)
+	ar -rcsv $(NAME) $(filter $?, $(BONUS_OBJS))
 
-$(NAME): $(OBJS)
-	@ar -rcsv $@ $?
+$(NAME): $(LIBFT) $(OBJS)
+	cp $(LIBFT) $@
+	@ar -rcsv $@ $(filter $?, $(OBJS))
 
-$(BONUS_NAME): $(BONUS_OBJS)
-	@ar -rcsv $@ $?
+bonus_lib: $(BONUS_OBJS)
 
 $(OBJS): %.o: %.c $(HEADERS)
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
@@ -65,4 +66,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus_lib
