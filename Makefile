@@ -38,10 +38,12 @@ override CPPFLAGS += $(addprefix -I, $(LIBRARY_INCLUDES))
 all: $(NAME)
 
 bonus: $(LIBFT) $(BONUS_OBJS)
+	touch $@
 	cp $(LIBFT) $(NAME)
 	ar -rcsv $(NAME) $(filter $?, $(BONUS_OBJS))
 
 $(NAME): $(LIBFT) $(OBJS)
+	rm -rf bonus
 	cp $(LIBFT) $@
 	@ar -rcsv $@ $(filter $?, $(OBJS))
 
@@ -61,7 +63,7 @@ clean:
 	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
+	rm -f $(NAME) $(BONUS_NAME) bonus
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
