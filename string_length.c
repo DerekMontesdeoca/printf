@@ -34,7 +34,7 @@ size_t	strnlen(const char *str, size_t n)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0' && i < n)
+	while (i < n && str[i] != '\0')
 		++i;
 	return (i);
 }
